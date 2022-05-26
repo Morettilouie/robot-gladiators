@@ -13,25 +13,12 @@ var fight = function(enemy) {
     console.log(playerInfo)
 
     while(playerInfo.health > 0 && enemy.health > 0) {
-
-
-    // Allow players to choose fight or skip
-    var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
-
-    // If player chooses to skip 
-    if (promptFight === "skip" || promptFight === "SKIP") {
-        // confirm player wants to skip the fight
-        var confirmSkip = window.confirm("Are you sure you would like to quit?");
-
-        // if yes (true), leave fight
-        if (confirmSkip) {
-            window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
-            // subtract money from playerInfo.money for skipping
-            playerInfo.money = Math.max(0, playerInfo.money - 10);
-            console.log("playerInfo.money", playerInfo.money);
+        fightOrSkip();
+        
+        if (fightOrSkip()) {
+            // if true, leave fight by breaking loop
             break;
         }
-    } 
     // generate random value based on player's attack power
     var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
     // Subtract the value of 'playerInfo.attack' from the value of 'enemy.health' and use that result to update the value in the 'enemy.health' variable
@@ -95,7 +82,6 @@ var startGame = function() {
 
             // reset enemy health
             pickedEnemyObj.health = randomNumber(40, 60);
-
             fight(pickedEnemyObj);
 
             // if we're not at the last enemy in the array and the player is still alive
@@ -107,9 +93,6 @@ var startGame = function() {
                     shop();
                 }
             }
-        }
-        else {
-        window.alert("You have lost your robot in battle! Game Over!")
         }
     }    
     // play again or quit
@@ -123,7 +106,7 @@ var endGame = function() {
         window.alert("Great job, you've survived the game! You now have a score of " + playerInfo.money + ".");
     }
     else {
-        window.alert("You've lost your robot in battle.");
+        window.alert("You've lost your robot in battle! Game Over!");
     }
     // ask a player if they would like to play again
     var playAgainConfirm = window.confirm("Would you like to play again?");
@@ -180,7 +163,6 @@ var getPlayerName = function() {
 } 
 var playerInfo = {
     name: getPlayerName(),
-    name: window.prompt("What is your robot's name?"),
     health: 100,
     attack: 10,
     money: 10,
@@ -225,5 +207,31 @@ var enemyInfo = [
         attack: randomNumber(10, 14)
     }
 ]
+var fightOrSkip = function() {
+    // Allow players to choose fight or skip
+    debugger;
+    var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
+    if (!promptFight) {
+        window.alert("You need to provide a valid answer! Please try again.");
+        return fightOrSkip();
+    }
+
+    // If player chooses to skip 
+    promptFight = promptFight.toLowerCase();
+    if (promptFight === "skip") {
+        // confirm player wants to skip
+        var confirmSkip = window.confirm("Are you sure you would like to quit?");
+
+        // if yes (true), leave fight
+        if (confirmSkip) {
+            window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
+            // subtract money from playerInfo.money for skipping
+            playerInfo.money = Math.max(0, playerInfo.money - 10);
+            console.log("playerInfo.money", playerInfo.money);
+            return true;
+        }
+    }
+}
+    
 // start the game 
 startGame();
