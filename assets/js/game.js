@@ -10,7 +10,6 @@
 var fight = function(enemy) {
     console.log(enemy);
     console.log(playerInfo)
-
     // keep track of who goes  first
     var isPlayerTurn = true;
     if (Math.random() > .5) {
@@ -33,7 +32,7 @@ var fight = function(enemy) {
             // Log a resulting message to the console so we know that it worked
             console.log(
                 playerInfo.name + " attacked " + enemy.name + " for " + damage + " damage. " + enemy.name + " now has " + enemy.health + " health remaining."
-            )
+            );
 
             // check enemy's health
             if (enemy.health <= 0) {
@@ -56,21 +55,20 @@ var fight = function(enemy) {
             //Log a resulting message to the console so we know that it worked
             console.log(
                 enemy.name + " attacked " + playerInfo.name + " for " + damage + " damage. " + playerInfo.name + " now has " + playerInfo.health + " health remaining."
-            )
+            );
             // check to see if the value of the playerInfo.health variable is greater than 0
             if (playerInfo.health <= 0) {
                 window.alert(playerInfo.name + " has died!")
                 // leave loop since player is dead
                 break;
-            }
-            else {
+            } else {
                 window.alert(playerInfo.name + " still has " + playerInfo.health + " health remaining.")
             }
         }
         // switch turn order for next round
         isPlayerTurn = !isPlayerTurn
     }
-}
+};
 
 
 
